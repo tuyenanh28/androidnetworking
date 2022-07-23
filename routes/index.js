@@ -15,5 +15,14 @@ router.get('/getUsers', function(req, res, next) {
       res.send(data.toString());
   });
 });
+router.post('/createUser', function(req, res, next) {
+  var email = req.body.email;
+  var password = req.body.password;
+  var data= {
+    email: undefined,
+    password:undefined
+  }
+  res.send(data)
+});
 
 module.exports = router;
