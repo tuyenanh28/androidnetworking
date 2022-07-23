@@ -1,5 +1,7 @@
 var express = require('express');
 var fs = require('fs');
+const multer  = require('multer')
+const upload = multer({ dest: 'upload/' })
 var router = express.Router();
 
 /* GET home page. */
@@ -15,13 +17,20 @@ router.get('/getUsers', function(req, res, next) {
       res.send(data.toString());
   });
 });
-router.post('/createUser', function(req, res, next) {
+router.post('/createUser', upload.single('avatar'), function(req, res, next) {
   var email = req.body.email;
   var password = req.body.password;
   var data= {
     email: undefined,
-    password:undefined
+    password:undefined,
+    avatar: undefined,
+    urlAvatar: undefined
   }
+  data.email = email;
+  data.password = password;
+  data.avatar = req.file.originalname;
+  data.urlAvatar = req.file.path;
+
   res.send(data)
 });
 
